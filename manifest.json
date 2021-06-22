@@ -1,8 +1,8 @@
 {
-  "id": "obsidian-sample-plugin",
-  "name": "Sample Plugin",
+  "id": "obsidian-wavedrom-plugin",
+  "name": "WaveDrom",
   "version": "1.0.0",
-  "description": "This is a sample plugin for Obsidian (https://obsidian.md)",
-  "author": "Licat",
+  "description": "This is very rough and quick integration of WaveDrom into obsidian",
+  "author": "Alex Stewart",
   "isDesktopOnly": false
 }

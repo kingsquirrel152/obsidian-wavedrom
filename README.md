@@ -20,3 +20,26 @@ The repo contains the latest plugin API (obsidian.d.ts) in Typescript Definition
 ### API Documentation
 
 See https://github.com/obsidianmd/obsidian-api
+
+
+
+```wavedrom
+{reg: [
+    {bits: 7,  name: 'opcode',    attr: 'OP-IMM'},
+    {bits: 5,  name: 'rd',        attr: 'dest'},
+{bits: 3,  name: 'func3',     attr: ['ADDI', 'SLTI', 'SLTIU', 'ANDI', 'ORI','XORI'], type: 4},
+    {bits: 5,  name: 'rs1',       attr: 'src'},
+    {bits: 12, name: 'imm[11:0]', attr: 'I-immediate[11:0]', type: 3}
+
+],
+config: {hspace: "width"}}
+```
+
+```wavedrom  
+{ signal : [            
+  { name: "clk",  wave: "p........"  },
+  { name: "bus",  wave: "x.34.555x",   data: "head body tail" },
+  { name: "wire", wave: "0.1..........0." },
+]}
+```
+
