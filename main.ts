@@ -22,10 +22,8 @@ export default class MyPlugin extends Plugin {
 		
 		const dest = document.createElement('script');
 		dest.setAttribute('type', 'WaveDrom');
-
-		source = source.replace(/&nbsp;/gi, " ");
-		
-        dest.setAttribute('src',source);
+		source = source.replace(/\n/g, " ");
+        dest.innerText = source;
        
 		
         el.appendChild(dest);
@@ -44,6 +42,14 @@ export default class MyPlugin extends Plugin {
         this.registerMarkdownCodeBlockProcessor("wavedrom", this.wavedromProcessor);
 
     }
+
+	utf8_to_b64( str: string ): string {
+		return window.btoa(unescape(encodeURIComponent( str )));
+	}
+	  
+	b64_to_utf8( str: string ): string {
+		return decodeURIComponent(escape(window.atob( str )));
+	}
 
 
 	onunload() {
