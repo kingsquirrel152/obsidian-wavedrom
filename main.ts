@@ -10,15 +10,7 @@ export default class MyPlugin extends Plugin {
 
 
 	wavedromProcessor = async (source: string, el: HTMLElement, _: MarkdownPostProcessorContext) => {
-		var wavedromDefault = document.createElement('script');
-		var wavedromMin = document.createElement('script');
-		wavedromMin.setAttribute('src', 'https://cdnjs.cloudflare.com/ajax/libs/wavedrom/2.6.8/wavedrom.min.js');
-		wavedromDefault.setAttribute('src', 'https://cdnjs.cloudflare.com/ajax/libs/wavedrom/2.6.8/skins/default.js');
-		wavedromMin.setAttribute('type','text/javascript');
-		wavedromDefault.setAttribute('type','text/javascript');
 
-		document.head.appendChild(wavedromDefault);
-		document.head.appendChild(wavedromMin);
 		
 		const dest = document.createElement('script');
 		dest.setAttribute('type', 'WaveDrom');
@@ -28,10 +20,19 @@ export default class MyPlugin extends Plugin {
 		
         el.appendChild(dest);
 		console.log('Processed');
-		document.body.onload = WaveDrom.ProcessAll();
+
     };
 
     onload(): void {
+		var wavedromDefault = document.createElement('script');
+		var wavedromMin = document.createElement('script');
+		wavedromMin.setAttribute('src', 'https://cdnjs.cloudflare.com/ajax/libs/wavedrom/2.6.8/wavedrom.min.js');
+		wavedromDefault.setAttribute('src', 'https://cdnjs.cloudflare.com/ajax/libs/wavedrom/2.6.8/skins/default.js');
+		wavedromMin.setAttribute('type','text/javascript');
+		wavedromDefault.setAttribute('type','text/javascript');
+
+		document.head.appendChild(wavedromDefault);
+		document.head.appendChild(wavedromMin);
         console.log('loading plugin wavedrom');
 		
 		this.registerCodeMirror((cm: CodeMirror.Editor) => {
@@ -41,6 +42,11 @@ export default class MyPlugin extends Plugin {
 
         this.registerMarkdownCodeBlockProcessor("wavedrom", this.wavedromProcessor);
 
+		// const observer = new MutationObserver(list => {
+		// 	WaveDrom.ProcessAll();
+		// });
+
+		//observer.observe(document.body, {attributes: true, childList: true, subtree: true});
     }
 
 	utf8_to_b64( str: string ): string {
@@ -51,6 +57,13 @@ export default class MyPlugin extends Plugin {
 		return decodeURIComponent(escape(window.atob( str )));
 	}
 
+	refreshHop(): void {
+		console.log("hopped");
+	}
+
+	refreshHop2(): void {
+		console.log("hopped2");
+	}
 
 	onunload() {
 		console.log('unloading plugin');
