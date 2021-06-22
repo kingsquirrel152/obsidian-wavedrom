@@ -24,9 +24,11 @@ export default class MyPlugin extends Plugin {
 		wrapper.appendChild(dest);
 		el.appendChild(wrapper);
 
+		// Probably a better way to do this
+		// This works for now though.
 		setTimeout(() => {	  
      		WaveDrom.ProcessAll();
-		}, 50);
+		}, 250);
 
 		console.log('Processed');
 
@@ -50,29 +52,7 @@ export default class MyPlugin extends Plugin {
 
 
         this.registerMarkdownCodeBlockProcessor("wavedrom", this.wavedromProcessor);
-
-		// const observer = new MutationObserver(list => {
-		// 	WaveDrom.ProcessAll();
-		// });
-
-		//observer.observe(document.body, {attributes: true, childList: true, subtree: true});
     }
-
-	utf8_to_b64( str: string ): string {
-		return window.btoa(unescape(encodeURIComponent( str )));
-	}
-	  
-	b64_to_utf8( str: string ): string {
-		return decodeURIComponent(escape(window.atob( str )));
-	}
-
-	refreshHop(): void {
-		console.log("hopped");
-	}
-
-	refreshHop2(): void {
-		console.log("hopped2");
-	}
 
 	onunload() {
 		console.log('unloading plugin');
