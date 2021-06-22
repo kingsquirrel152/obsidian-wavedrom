@@ -1,3 +1,4 @@
+import { wrap } from 'module';
 import { App, Plugin, MarkdownPostProcessorContext } from 'obsidian';
 
 
@@ -10,15 +11,23 @@ export default class MyPlugin extends Plugin {
 
 
 	wavedromProcessor = async (source: string, el: HTMLElement, _: MarkdownPostProcessorContext) => {
+		console.log("test");
+		// Create the source object
+		const wrapper = document.createElement('div');
+		wrapper.setAttribute('align', 'center');
 
-		
 		const dest = document.createElement('script');
 		dest.setAttribute('type', 'WaveDrom');
 		source = source.replace(/\n/g, " ");
         dest.innerText = source;
-       
-		
-        el.appendChild(dest);
+
+		wrapper.appendChild(dest);
+		el.appendChild(wrapper);
+
+		setTimeout(() => {	  
+     		WaveDrom.ProcessAll();
+		}, 50);
+
 		console.log('Processed');
 
     };
