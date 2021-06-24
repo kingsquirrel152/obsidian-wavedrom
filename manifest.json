@@ -1,5 +1,5 @@
 {
-  "id": "obsidian-wavedrom-plugin",
+  "id": "obsidian-wavedrom",
   "name": "WaveDrom",
   "version": "0.0.1",
   "description": "This is very rough and quick integration of WaveDrom into obsidian",
