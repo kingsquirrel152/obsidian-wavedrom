@@ -4,7 +4,7 @@ import { App, Plugin, MarkdownPostProcessorContext } from 'obsidian';
 
 declare var WaveDrom;
 
-export default class MyPlugin extends Plugin {
+export default class ObsidianWaveDrom extends Plugin {
 	onInit() {
 
 	}
