@@ -1,7 +1,7 @@
 {
   "id": "obsidian-wavedrom",
   "name": "WaveDrom",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "This is very rough and quick integration of WaveDrom into obsidian",
   "author": "Alex Stewart",
   "isDesktopOnly": false
