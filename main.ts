@@ -11,7 +11,7 @@ export default class ObsidianWaveDrom extends Plugin {
 
 
 	wavedromProcessor = async (source: string, el: HTMLElement, _: MarkdownPostProcessorContext) => {
-		console.log("test");
+		
 		// Create the source object
 		const wrapper = document.createElement('div');
 		wrapper.setAttribute('align', 'center');
@@ -30,7 +30,7 @@ export default class ObsidianWaveDrom extends Plugin {
      		WaveDrom.ProcessAll();
 		}, 250);
 
-		console.log('Processed');
+		//console.log('Processed');
 
     };
 
