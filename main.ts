@@ -28,28 +28,25 @@ export default class ObsidianWaveDrom extends Plugin {
 		// This works for now though.
 		setTimeout(() => {	  
      		WaveDrom.ProcessAll();
-		}, 250);
+		}, 5);
 
 		//console.log('Processed');
 
     };
 
     onload(): void {
-		var wavedromDefault = document.createElement('script');
-		var wavedromMin = document.createElement('script');
-		wavedromMin.setAttribute('src', 'https://cdnjs.cloudflare.com/ajax/libs/wavedrom/2.6.8/wavedrom.min.js');
-		wavedromDefault.setAttribute('src', 'https://cdnjs.cloudflare.com/ajax/libs/wavedrom/2.6.8/skins/default.js');
-		wavedromMin.setAttribute('type','text/javascript');
-		wavedromDefault.setAttribute('type','text/javascript');
-
-		document.head.appendChild(wavedromDefault);
-		document.head.appendChild(wavedromMin);
-        console.log('loading plugin wavedrom');
-		
-		this.registerCodeMirror((cm: CodeMirror.Editor) => {
-			console.log('codemirror', cm);
-		});
-
+		if( !window.hasOwnProperty("WaveDrom") ) {
+			var wavedromDefault = document.createElement('script');
+			var wavedromMin = document.createElement('script');
+			wavedromMin.setAttribute('src', 'https://cdnjs.cloudflare.com/ajax/libs/wavedrom/2.6.8/wavedrom.min.js');
+			wavedromDefault.setAttribute('src', 'https://cdnjs.cloudflare.com/ajax/libs/wavedrom/2.6.8/skins/default.js');
+			wavedromMin.setAttribute('type','text/javascript');
+			wavedromDefault.setAttribute('type','text/javascript');
+	
+			document.head.appendChild(wavedromDefault);
+			document.head.appendChild(wavedromMin);
+			console.log('loading plugin wavedrom');
+		}
 
         this.registerMarkdownCodeBlockProcessor("wavedrom", this.wavedromProcessor);
     }
