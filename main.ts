@@ -1,6 +1,4 @@
-import { wrap } from 'module';
 import { App, Plugin, MarkdownPostProcessorContext } from 'obsidian';
-
 
 declare var WaveDrom;
 
