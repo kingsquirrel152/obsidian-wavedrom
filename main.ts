@@ -1,4 +1,5 @@
 import { App, Plugin, MarkdownPostProcessorContext } from 'obsidian';
+import { wavedromsrc, defaultsrc } from "./wrapwave";
 
 declare var WaveDrom;
 
@@ -34,16 +35,16 @@ export default class ObsidianWaveDrom extends Plugin {
 
     onload(): void {
 		if( !window.hasOwnProperty("WaveDrom") ) {
+			console.log('loading plugin wavedrom');
 			var wavedromDefault = document.createElement('script');
 			var wavedromMin = document.createElement('script');
-			wavedromMin.setAttribute('src', 'https://cdnjs.cloudflare.com/ajax/libs/wavedrom/2.6.8/wavedrom.min.js');
-			wavedromDefault.setAttribute('src', 'https://cdnjs.cloudflare.com/ajax/libs/wavedrom/2.6.8/skins/default.js');
+			wavedromMin.setAttribute('src', wavedromsrc);
+			wavedromDefault.setAttribute('src', defaultsrc);
 			wavedromMin.setAttribute('type','text/javascript');
 			wavedromDefault.setAttribute('type','text/javascript');
 	
 			document.head.appendChild(wavedromDefault);
 			document.head.appendChild(wavedromMin);
-			console.log('loading plugin wavedrom');
 		}
 
         this.registerMarkdownCodeBlockProcessor("wavedrom", this.wavedromProcessor);
