@@ -12,7 +12,7 @@ export default class ObsidianWaveDrom extends Plugin {
 	wavedromProcessor = async (source: string, el: HTMLElement, _: MarkdownPostProcessorContext) => {
 		
 		// Give our wavedrom input node a unique name
-		let r = (Math.random() + 1).toString(36).substring(7);
+		let r = 0; //(Math.random() + 1).toString(36).substring(7);
 
 		// Create the source object
 		const wrapper = document.createElement('div');
@@ -35,6 +35,7 @@ export default class ObsidianWaveDrom extends Plugin {
 
 		// Render it to the wrapper div!
 		WaveDrom.RenderWaveElement(r, obj, wrapper, window.WaveSkin, false);
+
     };
 
     onload(): void {
