@@ -3,6 +3,10 @@ import { Plugin, MarkdownPostProcessorContext, MarkdownPostProcessor, MarkdownPr
 import waveskin from 'wavedrom/skins/default'
 import { parse } from 'json5'
 import { WaveDromType } from 'types';
+import { customAlphabet } from 'nanoid'
+
+const nanoid = customAlphabet('1234567890', 12)
+const nanoidNum = () => parseInt(nanoid())
 
 let Wavedrom: WaveDromType
 
@@ -35,7 +39,7 @@ export default class ObsidianWaveDrom extends Plugin {
     _?: MarkdownPostProcessorContext,
   ) {
     const source = parse(src)
-    Wavedrom.renderWaveElement(Date.now(), source, el, waveskin)
+    Wavedrom.renderWaveElement(nanoidNum(), source, el, waveskin)
   }
 
   unregister() {
