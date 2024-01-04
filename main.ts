@@ -1,66 +1,58 @@
-import { App, Plugin, MarkdownPostProcessorContext } from 'obsidian';
-import { wavedromsrc, defaultsrc } from "./wrapwave";
+import { Plugin, MarkdownPostProcessorContext, MarkdownPostProcessor, MarkdownPreviewRenderer } from 'obsidian';
+// @ts-ignore type declaration
+import waveskin from 'wavedrom/skins/default'
+import { parse } from 'json5'
+import { WaveDromType } from 'types';
+import { customAlphabet } from 'nanoid'
 
-declare var WaveDrom;
+const nanoid = customAlphabet('1234567890', 12)
+const nanoidNum = () => parseInt(nanoid())
+
+let Wavedrom: WaveDromType
 
 export default class ObsidianWaveDrom extends Plugin {
-	onInit() {
+  postProcessors: Map<string, MarkdownPostProcessor>
 
-	}
+  async onload() {
+    this.postProcessors = new Map()
+    // @ts-ignore type declaration
+    Wavedrom = (await import('wavedrom/wavedrom.unpkg')).default as WaveDromType
+    this.registerWaveDromBlock('wavedrom')
 
+    console.log('Obsidian wavedrom loaded')
+  }
 
-	wavedromProcessor = async (source: string, el: HTMLElement, _: MarkdownPostProcessorContext) => {
-		
-		// Give our wavedrom input node a unique name
-		let r = 0; //(Math.random() + 1).toString(36).substring(7);
+  registerWaveDromBlock(prefix: string) {
+    this.postProcessors.set(
+      prefix,
+      this.registerMarkdownCodeBlockProcessor(
+        prefix,
+        (src, el, ctx) => this.postProcessor(prefix, src, el, ctx)
+      )
+    )
+  }
 
-		// Create the source object
-		const wrapper = document.createElement('div');
-		wrapper.setAttribute('align', 'center');
+  postProcessor(
+    _prefix: string,
+    src: string,
+    el: HTMLElement,
+    _?: MarkdownPostProcessorContext,
+  ) {
+    const source = parse(src)
+    Wavedrom.renderWaveElement(nanoidNum(), source, el, waveskin)
+  }
 
-		// Use the parent wrapper as the wavedrom display
-		wrapper.setAttribute('id', 'WaveDrom_Display_' + r);
-		el.appendChild(wrapper);
+  unregister() {
+    this.postProcessors.forEach((value) => {
+      MarkdownPreviewRenderer.unregisterPostProcessor(value)
+    })
+    this.postProcessors.clear()
+  }
 
-
-		// Create script node with wavedrom json contents
-		const inputjson = document.createElement('script');
-		inputjson.setAttribute('type', 'WaveDrom');
-		source = source.replace(/\n/g, " ");
-        inputjson.innerText = source;
-		inputjson.setAttribute('id', 'InputJSON_' + r);
-
-		// Eval the script node into a form the wavedrom expects
-		var obj = WaveDrom.evaObject(inputjson);
-
-		// Render it to the wrapper div!
-		WaveDrom.RenderWaveElement(r, obj, wrapper, window.WaveSkin, false);
-
-    };
-
-    onload(): void {
-		if( !window.hasOwnProperty("WaveDrom") ) {
-			console.log('loading plugin wavedrom');
-			var wavedromDefault = document.createElement('script');
-			var wavedromMin = document.createElement('script');
-			wavedromMin.setAttribute('src', wavedromsrc);
-			wavedromDefault.setAttribute('src', defaultsrc);
-			wavedromMin.setAttribute('type','text/javascript');
-			wavedromDefault.setAttribute('type','text/javascript');
-	
-			document.head.appendChild(wavedromDefault);
-			document.head.appendChild(wavedromMin);
-
-			document.head.innerHTML += '<style type="text/css">div.wavedromMenu{position:fixed;border:solid 1pt#CCCCCC;background-color:white;box-shadow:0px 10px 20px #808080;cursor:default;margin:0px;padding:0px;}div.wavedromMenu>ul{margin:0px;padding:0px;}div.wavedromMenu>ul>li{padding:2px 10px;list-style:none;}div.wavedromMenu>ul>li:hover{background-color:#b5d5ff;}</style>';
-
-		}
-
-        this.registerMarkdownCodeBlockProcessor("wavedrom", this.wavedromProcessor);
-    }
-
-	onunload() {
-		console.log('unloading plugin');
-	}
+  onunload() {
+    this.unregister()
+    console.log('Obsidian wavedrom unloaded')
+  }
 }
 
 

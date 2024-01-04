@@ -9,8 +9,8 @@ Installing this plugin allows you to use a wavedrom fence in obsidian.
 ### How to use
 
 - Clone this repo.
-- `npm i` or `yarn` to install dependencies
-- `npm run dev` to start compilation in watch mode.
+- `pnpm i` to install dependencies
+- `pnpm run dev` to start compilation in watch mode.
 
 ### How to install the plugin
 

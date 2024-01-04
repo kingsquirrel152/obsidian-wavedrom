@@ -1,29 +1,37 @@
 {
   "name": "obsidian-wavedrom-plugin",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "description": "This is very rough and quick integration of WaveDrom into obsidian",
   "main": "main.js",
-  "files": [
-    "vendor"
-  ],
   "scripts": {
-    "dev": "rollup --config rollup.config.js -w",
-    "build": "rollup --config rollup.config.js"
+    "dev": "node esbuild.config.mjs",
+    "build": "tsc -noEmit -skipLibCheck && node esbuild.config.mjs production",
+    "version": "node version-bump.mjs && git add manifest.json versions.json",
+    "lint": "eslint .",
+    "run": "esno test/index.ts"
   },
-  "keywords": [],
+  "keywords": [
+    "wavedrom"
+  ],
   "author": "",
   "license": "MIT",
   "devDependencies": {
-    "@rollup/plugin-commonjs": "^15.1.0",
-    "@rollup/plugin-node-resolve": "^9.0.0",
-    "@rollup/plugin-typescript": "^6.0.0",
-    "@types/node": "^14.14.2",
-    "obsidian": "https://github.com/obsidianmd/obsidian-api/tarball/master",
-    "rollup": "^2.32.1",
-    "tslib": "^2.0.3",
-    "typescript": "^4.0.3"
+    "@codemirror/language": "^6.3.0",
+    "@codemirror/state": "^6.1.2",
+    "@codemirror/view": "^6.4.1",
+    "@types/node": "^18.11.17",
+    "@typescript-eslint/eslint-plugin": "5.46.1",
+    "@typescript-eslint/parser": "5.46.1",
+    "builtin-modules": "3.3.0",
+    "esbuild": "0.16.4",
+    "json5": "^2.2.2",
+    "nanoid": "3.3.4",
+    "obsidian": "latest",
+    "tslib": "2.4.1",
+    "typescript": "4.9.4",
+    "wavedrom": "^2.9.1"
   },
-  "dependencies": {
-    "rewire": "^5.0.0"
+  "eslintConfig": {
+    "extends": "@antfu"
   }
 }
